@@ -1,6 +1,9 @@
 package io.github.jshen123.wavreader;
 
 import java.io.*;
+import javax.sound.sampled.AudioFormat;
+import static javax.sound.sampled.AudioSystem.getAudioInputStream;
+
 
 public class WavReader {
     public static void main(String[] args){
@@ -10,14 +13,18 @@ public class WavReader {
             WavFile wavFile;
             wavFile = WavFile.loadWav(new File(args[0]));
 
-            for (int sample : wavFile.samples[0]){
-                max = Math.max(max, sample);
-                min = Math.min(min, sample);
-
+            for (int i = 0; i < wavFile.samples.length; i++){
+                max = Math.max(max, wavFile.samples[i]);
+                min = Math.min(min, wavFile.samples[i]);
             }
 
-            System.out.println(min);
-            System.out.println(max);
+            AudioFormat af = wavFile.audioIn.getFormat();
+            float sampleRate = af.getSampleRate();
+            int sampleBit = af.getSampleSizeInBits();
+            int numSamples = (int) sampleRate * sampleBit;
+
+            System.out.println(numSamples);
+
         } catch (Exception e){
             System.err.println(e);
         }
