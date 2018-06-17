@@ -26,10 +26,10 @@ public class WavFile {
             int streamLength = (int) wavFile.audioIn.getFrameLength();
             byte[] bytes = new byte[byteSize * streamLength];
 
-            // read the data of the wav file
+            // read the bytes of the wav file
             int data = wavFile.audioIn.read(bytes);
             int len = bytes.length;
-            wavFile.samples = new int[streamLength];
+            wavFile.samples = new int[len/2];
 
             int i = 0;
             int j;
