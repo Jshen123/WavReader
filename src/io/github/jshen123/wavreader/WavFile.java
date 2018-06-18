@@ -17,18 +17,25 @@ public class WavFile {
         wavFile.audioIn = null;
 
         try {
-            // load the audio input stream from the wav file
+            /* load the audio input stream from the wav file */
             wavFile.audioIn = getAudioInputStream(wavFile.file);
 
-            // obtain the byte size of the frame and the stream length
-            // set the size of the byte array as frame size * stream length
+            /*
+            obtain the byte size of the frame and the stream length;
+            set the size of the byte array as frame size * stream length
+            */
             int byteSize = wavFile.audioIn.getFormat().getFrameSize();
             int streamLength = (int) wavFile.audioIn.getFrameLength();
             byte[] bytes = new byte[byteSize * streamLength];
 
-            // read the bytes of the wav file
-            int data = wavFile.audioIn.read(bytes);
             int len = bytes.length;
+
+            /*
+            read byte per byte of the wav file from the specified starting and ending position;
+            store the read value into the byte array
+            */
+            int data = wavFile.audioIn.read(bytes, 0 , len);
+
             wavFile.samples = new int[len/2];
 
             int i = 0;
